@@ -1,22 +1,23 @@
 \section{12.04.2018 - PIG}
 Führen Sie folgende Pig Operationen mit Ihren Testdaten (Bags) aus: LOAD,  Dump, Join, Cross, Union, Split
 
-\subsection{Kurzdarstellung der Aufgabenstellung}
+\subsection*{Kurzdarstellung der Aufgabenstellung}
 Datensätze in From von .csv Datein in HDFS Ordner Laden und Mittels PIG die im HDFS bereitgestellten Datensätze auswerten. Der grundlegende Umgang mit Daten in PIG als Bestandteil von HADOOP soll durch bereitstellen von Daten in HDFS und das abfragen/analysieren in PIG selbiger geprobt werden.
-\subsection{Lösung}
-- Starten der Oracle 4.9 VM
+\subsection*{Lösung}
+\begin{itemize}
+\item[-] Starten der Oracle 4.9 VM
 
 Ändern von Tastaturlayout auf DE mittels Terminaleingabe:
 \begin{lstlisting}
 setxkbmap -layout de
 \end{lstlisting}
 
-Anlegen eines eigenes Ordners für die Aufgabenstellung auf der VM:
+\item[-] Anlegen eines eigenes Ordners für die Aufgabenstellung auf der VM:
 \begin{lstlisting}
 mkdir /usr/tmp/gruppe
 \end{lstlisting}
 
-Drei Textdateien (artikel, ek\_pos\_1, ek\_pos\_2) in /usr/tmp/gruppe/ mit Testdaten anlegen:
+\item[-] Drei Textdateien (artikel, ek\_pos\_1, ek\_pos\_2) in /usr/tmp/gruppe/ mit Testdaten anlegen:
 \begin{figure}[!htb]
         \begin{minipage}{1\textwidth}
                 \centering
@@ -26,35 +27,34 @@ Drei Textdateien (artikel, ek\_pos\_1, ek\_pos\_2) in /usr/tmp/gruppe/ mit Testd
         \end{minipage}
 \end{figure}
 
-Über den Termin einen HDFS Ordner fuer die Aufgabenstellung anlegen:
+\item[-] Über den Termin einen HDFS Ordner fuer die Aufgabenstellung anlegen:
 \begin{lstlisting}
 hdfs dfs -mkdir hdfs://bigdatalite.localdomain:8020/tmp/gruppe
 \end{lstlisting}
 
-Zuvor angelegte Textdatei in usr/tmp/gruppe in HDFS Ordner (.../tmp/gruppe) kopieren:
+\item[-] Zuvor angelegte Textdatei in usr/tmp/gruppe in HDFS Ordner (.../tmp/gruppe) kopieren:
 \begin{lstlisting}
 hdfs dfs -put /usr/tmp/gruppe/ek_pos_1 hdfs://bigdatalite.localdomain:8020/tmp/gruppe
 hdfs dfs -put /usr/tmp/gruppe/ek_pos_2 hdfs://bigdatalite.localdomain:8020/tmp/gruppe
 hdfs dfs -put /usr/tmp/gruppe/artikel hdfs://bigdatalite.localdomain:8020/tmp/gruppe
 \end{lstlisting}
 
-Show files on datastore (printscreen Ergebnis):
+\item[-] Show files on datastore (printscreen Ergebnis):
 \begin{lstlisting}
 hdfs dfs -ls /tmp/gruppe
 \end{lstlisting}
 
-Start Pig
+\item[-] Start Pig
 \begin{lstlisting}
 pig -x mapreduce
 \end{lstlisting}
 
-Verlassen der Shell: 
+\item[-] Verlassen der Shell: 
 \begin{lstlisting}
 exit the Grunt shell using 'ctrl + d'
 \end{lstlisting}
 
-
-Daten aus HDFS Ordner in PIG laden, unter angabe der Spaltennamen und Datentypen:
+\item[-] Daten aus HDFS Ordner in PIG laden, unter angabe der Spaltennamen und Datentypen:
 \begin{lstlisting}
 artikel = LOAD 'hdfs://bigdatalite.localdomain:8020/tmp/gruppe/artikel' USING
 PigStorage(',') as (art_id:int, art_name:chararray);
@@ -63,9 +63,7 @@ ek_pos_1 = LOAD 'hdfs://bigdatalite.localdomain:8020/tmp/gruppe/ek_pos_1'       
 
 ek_pos_2 = LOAD 'hdfs://bigdatalite.localdomain:8020/tmp/gruppe/ek_pos_2'       USING PigStorage(',') as (kd_id:int, pos:int, art_id:int, menge:int);
 \end{lstlisting}
-
-Ausführen von Abfragen auf den und deren Ausgaben:
-
+\item[-] Ausführen von Abfragen auf den und deren Ausgaben:
 \subsubsection*{UNION}
 \begin{lstlisting}
 ek_positionen = UNION ek_pos_1, ek_pos_2;
@@ -108,7 +106,6 @@ dump einkauf_1_1;
 dump einkauf_1_2; (Ausgabe fehlt)
 \end{lstlisting}
 
-
 \subsubsection*{CROSS}
 \begin{lstlisting}
 ek_pos_cross = CROSS ek_pos_1, ek_pos_2;
@@ -138,9 +135,9 @@ dump ek_pos_cross;
 --(9000,1,6203338,2,8000,2,6203175,1)
 --(9000,1,6203338,2,8000,1,6202443,2)
 \end{lstlisting}
-
-\subsection{Aufteilung der Aufgaben im Team}
-\subsection{Darstellung der benutzen Werkzeuge und Systeme}
+\end{itemize}
+\subsection*{Aufteilung der Aufgaben im Team}
+\subsection*{Darstellung der benutzen Werkzeuge und Systeme}
 \subsubsection*{Entwurfswerkzeug}
 \subsubsection*{Entwicklungsumgebung}
 
