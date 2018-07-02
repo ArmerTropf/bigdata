@@ -1,20 +1,19 @@
-\section{31.05.2018 - R RJDBC / Oracle}
+\section{R RJDBC / Access (31.05.2018) }
 \begin{itemize}
-\item[-] Suchen Sie sich einen für Sie interessanten Bereich aus bspw. Marktforschung, soziale Netzwerke, Wetterstationen, Gesundheitswesen, Natur und Sozialwissenschaften, etc.
-\item[-] Führen Sie einen Tabellen Entwurf durch.
-\item[-] Erzeugen Sie die Tabellen (Oracle Datenbank).
-\item[-] Füllen Sie die Tabellen mit einigen Testdaten
-\item[-] Bauen Sie eine RJDBC Verbindung (R) zur Oracle Datenbank auf.
-\item[-] Analysieren Sie die Daten
-\item[-] Suchen Sie in deren Datenbeständen nach unbekannten Zusammenhängen.
+\item[-]Suchen Sie sich einen für Sie interessanten Bereich aus bspw. Marktforschung, soziale Netzwerke, Wetterstationen, Gesundheitswesen, Natur und Sozialwissenschaften, etc.
+\item[-]Führen Sie einen Tabellen Entwurf durch.
+\item[-]Erzeugen Sie die Tabellen (Oracle Datenbank).
+\item[-]Füllen Sie die Tabellen mit einigen Testdaten
+\item[-]Bauen Sie eine RJDBC Verbindung (R) zur Oracle Datenbank auf.
+\item[-]Analysieren Sie die Daten
+\item[-]Suchen Sie in deren Datenbeständen nach unbekannten Zusammenhängen.
 \end{itemize}
 \subsection*{Kurzdarstellung der Aufgabenstellung}
 Es sollen Daten aus einem beliegen Bereich gewählt werden und in einer Datenbank abgelegt werden. Auf die Datenbank soll mit R zugriffen werden um die Daten analysieren zu können.
 \subsection*{Lösung}
-- gewählter Datensatz: https://www.kaggle.com/harlfoxem/housesalesprediction
-- beinhaltet Hausverkaufsdaten von Häusern in King County (USA) im Jahre 2014
-- Daten wurden in MS-Access (C:/users/admin/documents/DATA\_DB.mdb) mit der CSV-Importfunktion eingelesen
-
+\begin{itemize}
+\item[-]Gewählter Datensatz: https://www.kaggle.com/harlfoxem/housesalesprediction beinhaltet Hausverkaufsdaten von Häusern in King County (USA) im Jahre 2014
+\item[-]Daten wurden in MS-Access (C:/users/admin/documents/DATA\_DB.mdb) mit der CSV-Importfunktion eingelesen(\autoref{fig:rjdbc1})
 \begin{figure}[!htb]
         \begin{minipage}{1\textwidth}
                 \centering
@@ -25,25 +24,25 @@ Es sollen Daten aus einem beliegen Bereich gewählt werden und in einer Datenban
 \end{figure}
 
 Für die analyse wurde nur R gestartet und folgende Aktionen/Befehle ausgeführt:
-Installieren RODBC Package:
+\item[-]Installieren RODBC Package:
 \begin{lstlisting}
 install.packages("RODBC")
 \end{lstlisting}
-        Aufrufen Package RODBC:
+\item[-]Aufrufen Package RODBC:
 \begin{lstlisting}
 library(RODBC)
 \end{lstlisting}
-Zuweisen Genutzten Datenbank auf (abgelegt in R source Ordner)
+\item[-]Zuweisen Genutzten Datenbank auf (abgelegt in R source Ordner)
 \begin{lstlisting}
 channel <- odbcConnectAccess("DATA\_DB.mdb")
 \end{lstlisting}
 
-Zweisen der Datentabelle auf Objekt:
+\item[-]Zweisen der Datentabelle auf Objekt:
 \begin{lstlisting}
 data = sqlQuery(channel ,paste('SELECT * FROM HOUSE\_PRICE\_SQRFT'))
 \end{lstlisting}
 
-Anzeigen der ersten sechs Zeilen der Tabelle/Objekt
+\item[-]Anzeigen der ersten sechs Zeilen der Tabelle/Objekt(\autoref{fig:rjdbc2})
 \begin{figure}[!htb]
         \begin{minipage}{1\textwidth}
                 \centering
@@ -53,7 +52,7 @@ Anzeigen der ersten sechs Zeilen der Tabelle/Objekt
         \end{minipage}
 \end{figure}
 
-Analyse Histogram Preis:
+\item[-]Analyse Histogram Preis(\autoref{fig:rjdbc3}):
 \begin{lstlisting}
 hist(data$price,xlab = "price",col = "green",border = "red"
 \end{lstlisting}
@@ -67,12 +66,12 @@ hist(data$price,xlab = "price",col = "green",border = "red"
         \end{minipage}
 \end{figure}
 
-Datensatz auf Preise bis maximal 1mio reduzieren:
+\item[-]Datensatz auf Preise bis maximal 1mio reduzieren:
 \begin{lstlisting}
-data = sqlQuery(channel ,paste('SELECT * FROM HOUSE_PRICE_SQRFT                 WHERE PRICE < 1000001'))
+data = sqlQuery(channel ,paste('SELECT * FROM HOUSE_PRICE_SQRFT WHERE PRICE < 1000001'))
 \end{lstlisting}
 
-        Neues Histogramm ausführen
+\item[-]Neues Histogramm ausführen(\autoref{fig:rjdbc4}):
 \begin{lstlisting}
 hist(data$price,xlab = "price",col = "green",border = "red")
 \end{lstlisting}
@@ -86,17 +85,17 @@ hist(data$price,xlab = "price",col = "green",border = "red")
         \end{minipage}
 \end{figure}
 
-Abfrage minimum Preis in der Datei:
+\item[-]Abfrage minimum Preis in der Datei(\autoref{fig:rjdbc4-1}):
 \begin{figure}[!htb]
         \begin{minipage}{1\textwidth}
                 \centering
-                \includegraphics[width=0.90\textwidth]{pics/rjdbc4-1.png}\par\vspace{0cm}
+                \includegraphics[width=0.50\textwidth]{pics/rjdbc4-1.png}\par\vspace{0cm}
                 \caption{Abfrage Preis}
                 \label{fig:rjdbc4-1}
         \end{minipage}
 \end{figure}
 
-Boxplot (Wohnraufgrößen Variation pro Baujahr)
+\item[-]Boxplot (Wohnraufgrößen Variation pro Baujahr)(\autoref{fig:rjdbc5}):
 \begin{lstlisting}
 boxplot(sqft_living ~ yr_built, data = data, xlab = "YEAR BUILT",+    ylab = "SQFT_LIVINV", main = "SQFT PER YEAR OF CONSTRUCTION")
 \end{lstlisting}
@@ -104,13 +103,13 @@ boxplot(sqft_living ~ yr_built, data = data, xlab = "YEAR BUILT",+    ylab = "SQ
 \begin{figure}[!htb]
         \begin{minipage}{1\textwidth}
                 \centering
-                \includegraphics[width=0.90\textwidth]{pics/rjdbc5.png}\par\vspace{0cm}
+                \includegraphics[width=0.50\textwidth]{pics/rjdbc5.png}\par\vspace{0cm}
                 \caption{Boxplot SQFT per year of construction}
                 \label{fig:rjdbc5}
         \end{minipage}
 \end{figure}
 
-Erstellen von SCATTER PLOT MATRIX:
+\item[-]Erstellen von SCATTER PLOT MATRIX(\autoref{fig:rjdbc6}):
 \begin{lstlisting}
 pairs(~price+sqft_living+sqft_lot,data = data,  +    main = "Scatterplot Matrix")
 \end{lstlisting}
@@ -118,15 +117,15 @@ pairs(~price+sqft_living+sqft_lot,data = data,  +    main = "Scatterplot Matrix"
 \begin{figure}[!htb]
         \begin{minipage}{1\textwidth}
                 \centering
-                \includegraphics[width=0.90\textwidth]{pics/rjdbc6.png}\par\vspace{0cm}
+                \includegraphics[width=0.50\textwidth]{pics/rjdbc6.png}\par\vspace{0cm}
                 \caption{Scatterplot}
                 \label{fig:rjdbc6}
         \end{minipage}
 \end{figure}
 
-- multiple lineare Regression (Price in Abängigkeit Sqft\_Living und Sqft\_Loft)
+\item[-]multiple lineare Regression (Price in Abängigkeit Sqft\_Living und Sqft\_Loft)
 
-Installation und Öffnung der relevanten Daten
+\item[-]Installation und Öffnung der relevanten Daten
 \begin{lstlisting}
 install.packages("caret")
 install.packages("ggplot2")
@@ -134,7 +133,7 @@ install.packages("lattice")
 library(caret)
 \end{lstlisting}
 
-Verwendung der Daten in der variable „data“
+\item[-]Verwendung der Daten in der variable „data“(\autoref{fig:rjdbc7})
 
 \begin{figure}[!htb]
         \begin{minipage}{1\textwidth}
@@ -145,26 +144,21 @@ Verwendung der Daten in der variable „data“
         \end{minipage}
 \end{figure}
 
-Verwendung Modell für multiple lineare Regression mit allen mathematisch        vorstellbar relevanten spalten
+\item[-]Verwendung Modell für multiple lineare Regression mit allen mathematisch        vorstellbar relevanten spalten
 \begin{lstlisting}
 model <-lm(price~bedrooms+bathrooms+sqft_living+sqft_lot+waterfront+    view+condition+grade+sqft_above+sqft_basement+yr_built+yr_renovated,    data = data)
 \end{lstlisting}
 
-        Ausgabe des berechneten Modells:
-
+\item[-]Ausgabe des berechneten Modells(\autoref{fig:rjdbc8}):
 \begin{figure}[!htb]
         \begin{minipage}{1\textwidth}
                 \centering
-                \includegraphics[width=0.90\textwidth]{pics/rjdbc8.png}\par\vspace{0cm}
+                \includegraphics[width=0.60\textwidth]{pics/rjdbc8.png}\par\vspace{0cm}
                 \caption{Ausgabe Berechnungsmodell}
                 \label{fig:rjdbc8}
         \end{minipage}
 \end{figure}
-
-
-
-
-
+\end{itemize}
 \subsection*{Aufteilung der Aufgaben im Team}
 Alle Aufgabenpunkte wurden gemeinsam bearbeitet
 \subsection*{Darstellung der benutzen Werkzeuge und Systeme}

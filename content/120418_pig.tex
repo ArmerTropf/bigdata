@@ -1,4 +1,4 @@
-\section{12.04.2018 - PIG}
+\section{PIG(12.04.2018)}
 Führen Sie folgende Pig Operationen mit Ihren Testdaten (Bags) aus: LOAD,  Dump, Join, Cross, Union, Split
 
 \subsection*{Kurzdarstellung der Aufgabenstellung}
@@ -7,7 +7,7 @@ Datensätze in From von .csv Datein in HDFS Ordner Laden und Mittels PIG die im 
 \begin{itemize}
 \item[-] Starten der Oracle 4.9 VM
 
-Ändern von Tastaturlayout auf DE mittels Terminaleingabe:
+\item[-] Ändern von Tastaturlayout auf DE mittels Terminaleingabe:
 \begin{lstlisting}
 setxkbmap -layout de
 \end{lstlisting}
@@ -17,11 +17,11 @@ setxkbmap -layout de
 mkdir /usr/tmp/gruppe
 \end{lstlisting}
 
-\item[-] Drei Textdateien (artikel, ek\_pos\_1, ek\_pos\_2) in /usr/tmp/gruppe/ mit Testdaten anlegen:
+\item[-] Drei Textdateien (artikel, ek\_pos\_1, ek\_pos\_2) in /usr/tmp/gruppe/ mit Testdaten anlegen(\autoref{fig:pig1}):
 \begin{figure}[!htb]
         \begin{minipage}{1\textwidth}
                 \centering
-                \includegraphics[width=0.90\textwidth]{pics/pig1.png}\par\vspace{0cm}
+                \includegraphics[width=0.90\textwidth]{pics/HDFS_1.png}\par\vspace{0cm}
                 \caption{Tabellen}
                 \label{fig:pig1}
         \end{minipage}
@@ -39,17 +39,25 @@ hdfs dfs -put /usr/tmp/gruppe/ek_pos_2 hdfs://bigdatalite.localdomain:8020/tmp/g
 hdfs dfs -put /usr/tmp/gruppe/artikel hdfs://bigdatalite.localdomain:8020/tmp/gruppe
 \end{lstlisting}
 
-\item[-] Show files on datastore (printscreen Ergebnis):
+\item[-] Show files on datastore (printscreen Ergebnis)(\autoref{fig:pig1-1}):
 \begin{lstlisting}
 hdfs dfs -ls /tmp/gruppe
 \end{lstlisting}
+\begin{figure}[!htb]
+        \begin{minipage}{1\textwidth}
+                \centering
+                \includegraphics[width=0.90\textwidth]{pics/HDFS_2.png}\par\vspace{0cm}
+                \caption{Tabellen im Datastore}
+                \label{fig:pig1-1}
+        \end{minipage}
+\end{figure}
 
 \item[-] Start Pig
 \begin{lstlisting}
 pig -x mapreduce
 \end{lstlisting}
 
-\item[-] Verlassen der Shell: 
+\item[-] pig schließen: 
 \begin{lstlisting}
 exit the Grunt shell using 'ctrl + d'
 \end{lstlisting}
@@ -137,6 +145,7 @@ dump ek_pos_cross;
 \end{lstlisting}
 \end{itemize}
 \subsection*{Aufteilung der Aufgaben im Team}
+Alle Punkte wurden gemeinsam bearbeitet.
 \subsection*{Darstellung der benutzen Werkzeuge und Systeme}
 \subsubsection*{Entwurfswerkzeug}
 \subsubsection*{Entwicklungsumgebung}
