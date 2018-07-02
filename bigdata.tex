@@ -1,0 +1,227 @@
+\documentclass[12pt,ngerman,twoside]{scrartcl}
+\usepackage{microtype}
+\usepackage{lmodern}
+%% Codelisting
+%\usepackage{minted}
+\usepackage{listings}
+
+\lstset{
+%numbers=left,
+%numberstyle=\tiny,
+%stepnumber=1,
+%numbersep=8pt,
+backgroundcolor=\color{lightgray},
+frame=single,
+basicstyle=\footnotesize,
+breaklines=true,
+commentstyle=\color{green}}
+
+\usepackage{verbatim}				%kommentare
+
+\usepackage[utf8]{inputenc}		%Encoding
+\usepackage[T1]{fontenc}			%T1 Zeichensatz; Anführungszeichen usw.
+\usepackage[scaled=0.92]{helvet}		%Schriftsatzklon Helvecia
+
+%% Zeilenabstände 
+\usepackage{setspace}
+\onehalfspacing	
+
+\usepackage[ngerman]{babel} 	%deutsche Rechtschreibung
+\usepackage{ngerman}
+\usepackage{parskip}				%Absatz wird nicht mehr eingerückt
+\usepackage{hyperref}				%links
+
+%% Packages für Grafiken & Abbildungen 
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}  %Rahmen Bilder
+\usepackage[font=small,labelfont=bf]{caption}
+\captionsetup[figure]{font=small}
+\newcommand{\source}[1]{\caption*{Quelle: {#1}}}
+\usepackage{wrapfig}		%Fliesstext
+\usepackage{subcaption}
+
+%% Bibliograpy %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%BEFINDET SICH IN LITERATURVERZEICHNIS
+%\usepackage[style=apa,backend=biber]{biblatex}
+%\DeclareLanguageMapping{ngerman}{ngerman-apa}
+%\addbibresource{firefighterDocu.bib}
+
+% IEEE
+%\usepackage{natbib}
+%\bibliography{firefighterDocu}
+
+%Mathematische Symbole
+\usepackage{mathtools}
+
+%Abkürzungen
+\usepackage[nohyperlinks, printonlyused, smaller]{acronym}
+
+%Tabellen
+\usepackage[table]{xcolor}
+
+\definecolor{tableHeader}{RGB}{211, 47, 47}
+\definecolor{tableLineOne}{RGB}{245, 245, 245}
+\definecolor{tableLineTwo}{RGB}{224, 224, 224}
+
+\usepackage{longtable}
+\usepackage{multirow, varwidth}
+\usepackage[table]{xcolor}
+
+
+%Textersetzung
+\newcommand{\base}{Steuer"=Server }
+\newcommand{\internet}{Internetdienste"=Server }
+\newcommand{\monitor}{Einsatzmonitor }
+\newcommand{\push}{Browser"=Push"=Dienst }
+
+\newcommand{\zcode}{ Zugangscode }
+
+%Header
+\usepackage{fancyhdr}
+
+
+\begin{document}
+\selectlanguage{ngerman}
+
+
+\pagestyle{empty}
+\KOMAoptions{twoside = false}
+
+\begin{titlepage}
+\centering
+\begin{figure}[htbp]
+\hspace*{3.3cm}
+%\includegraphics[width=0.68\textwidth]{pics/hs_logo.png}\par%
+\end{figure}
+        {\normalsize Bachelorarbeit mit dem Titel\par}
+        %\vspace{1.0cm}
+        {\LARGE\bfseries BigData: Anwendungsresultate der verschiedenen Anwendungsmöglichkeiten von Hadoop \par}
+\vspace{1.0cm}
+%       {\normalsize zur Erlangung\par}
+%       {\normalsize\textbf{Bachelor of Science} \par}
+
+\vspace{1.0cm}
+        Vorgelegt von:\par
+        Sun Huayi
+        Martrikelnummer: 33338 \par
+        Daniel Paul Hoffmann 
+        Martrikelnummer: 26355 \par 
+        Michael Günster 
+        Martrikelnummer: 32465 \par
+        Bearbeitungszeitraum: 22.03.2018 - 05.07.2018
+
+% Bottom of the page
+\vspace*{\fill}
+{\small
+        Modulverantwortliche: Prof. Dr. Nadija Syrjakow\par}
+\end{titlepage}
+
+\cleardoublepage
+
+%\KOMAoptions{twoside = true}
+\newpage
+\tableofcontents				%Inhaltsverzeichnis
+\setcounter{page}{1}
+
+
+%\pagestyle{headings}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\leftmark}
+\fancyhead[RO]{\rightmark}
+%\fancyfoot[CE,CO]{\leftmark}
+\fancyfoot[LE,RO]{\thepage}
+
+
+\newpage
+
+
+\input{content/220318_recommender}
+
+
+\newpage
+
+
+\input{content/120418_pig}
+
+
+\newpage
+
+
+\input{content/030518_hbase}
+
+
+\newpage
+
+
+\input{content/170518_tutor}
+
+\newpage
+
+
+\section{31.05.2018 - R RJDBC / Oracle}
+- Suchen Sie sich einen für Sie interessanten Bereich aus bspw. Marktforschung, soziale Netzwerke, Wetterstationen, Gesundheitswesen, Natur und Sozialwissenschaften, etc. 
+- Führen Sie einen Tabellen Entwurf durch. 
+- Erzeugen Sie die Tabellen (Oracle Datenbank).
+- Füllen Sie die Tabellen mit einigen Testdaten 
+- Bauen Sie eine RJDBC Verbindung (R) zur Oracle Datenbank auf.
+- Analysieren Sie die Daten 
+- Suchen Sie in deren Datenbeständen nach unbekannten Zusammenhängen. 
+
+\subsection{Kurzdarstellung der Aufgabenstellung}
+\subsection{Aufteilung der Aufgaben im Team}
+\subsection{Darstellung der benutzen Werkzeuge und Systeme}
+\subsubsection*{Entwurfswerkzeug}
+\subsubsection*{Entwicklungsumgebung}
+
+
+\newpage
+\input{content/070618_hive}
+
+
+
+\newpage
+
+
+\input{content/140618_aris}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+\end{document}
+
+

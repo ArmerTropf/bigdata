@@ -1,0 +1,167 @@
+\section{07.06.2018 - R / Hive}
+- Suchen Sie sich einen für Sie interessanten Bereich aus bspw. Marktforschung, soziale Netzwerke, Wetterstationen, Gesundheitswesen, Natur und Sozialwissenschaften, etc.
+- Erzeugen Sie für Ihr Beispiel zwei Hive Tabellen
+- Füllen Sie die Tabellen mit einigen Testdaten (LOAD DATA, Insert).
+- Bauen Sie eine R Verbindung zur HIVE auf.
+- Analysieren Sie die Daten
+
+\subsection{Kurzdarstellung der Aufgabenstellung}
+Mittels dem Anlegen von zwei Tabellen in HIVE und dem anschließenden Bearbeiten/Analysieren mit R soll die das Zusammenspiel von relevanter Software für BigData geübt/demonstriert werden.
+\subsection{Lösung}
+\subsubsection*{HIVE}
+
+- Ordner in /usr/tmp/hive/ anlegen
+
+- Datensets „hotels.csv“ und „autos.csv“  in /usr/tmp/hive/ legen
+
+- HIVE über den Terminal in Oracle VM4.9:
+\begin{lstlisting}
+HIVE
+\end{lstlisting}
+
+- separate Datenbank im HIVE anlegen, falls keine namentlich identische existiert:
+\begin{lstlisting}
+CREATE DATABASE IF NOT EXISTS diim18;
+\end{lstlisting}
+
+-Tabelle „hotels“ anlegen mit folgendem Befehl:
+\begin{lstlisting}
+Create TABLE hotels(gewinn FLOAT, preisInMio FLOAT,qm FLOAT,stadt String)       ROW Format DELIMITED FIELDS Terminated by ',' Lines terminated by '\n';
+\end{lstlisting}
+
+-Tabelle „autos“ anlegen mit folgendem Befehl:
+\begin{lstlisting}
+Create TABLE autos(preis FLOAT, registrierungJahr INT,ps FLOAT,km INT,  modell String, kraftstoff STRING, name STRING) ROW Format DELIMITED FIELDS      Terminated by ',' Lines terminated by '\n';
+\end{lstlisting}
+
+- Daten aus hotels.csv in HIVE Tabelle hotels laden:
+\begin{lstlisting}
+LOAD DATA LOCAL INPATH '/usr/tmp/hive/hotels/hotels.csv' Overwrite INTO         Table hotels;
+\end{lstlisting}
+
+- Daten aus hotels.csv in HIVE Tabelle hotels laden:
+\begin{lstlisting}
+LOAD DATA LOCAL INPATH '/usr/tmp/hive/autos/autos.csv' Overwrite INTO   Table autos;
+\end{lstlisting}
+- SCREENSHOT VON den angelegten Tabellen ggf interessant
+
+=> Die Daten können nun mit SQL Statements betrachtet und manipuliert werden
+
+\subsubsection{R}
+
+- starten von R durch Eingabe in den terminal auf der Oracle 4.9 VM:
+\begin{lstlisting}
+R
+\end{lstlisting}
+
+- installieren des RJDBC packages:
+\begin{lstlisting}
+install.packages("RJDBC",dep=TRUE)
+\end{lstlisting}
+
+- aufrufen des RJDBC packages:
+\begin{lstlisting}
+library("RJDBC")
+\end{lstlisting}
+
+- driver auf variable in R zur Verwendung zuweisen:
+\begin{lstlisting}
+drv <-JDBC("org.apache.hive.jdbc.HiveDriver","/usr/lib/hive/lib         /hive-jdbc.jar")
+\end{lstlisting}
+
+- Hierzu ich weiss nicht wozu man das folgende Braucht aber muss ja rein:
+
+\begin{lstlisting}
+library("ORCH")
+ore.connect(type="HIVE")
+ore.sync()
+\end{lstlisting}
+
+- Verbindung zu R aufbauen
+\begin{lstlisting}
+conn <- dbConnect(drv, "jdbc:hive2://localhost:10000/diim18", "", "")
+\end{lstlisting}
+
+- Inhalt der Tabelle autos im Hive auf die Variable autos in R zuweisen:
+\begin{lstlisting}
+autos <- dbGetQuery(conn, "Select * from autos")
+\end{lstlisting}
+
+- Ausgabe der ersten 5 Zeilen
+\begin{lstlisting}
+head(autos)
+\end{lstlisting}
+
+- lineares Regressionsmodell (lRm) erstellen: autos.preis = a * autos.km + b
+\begin{lstlisting}
+model <-lm(autos.preis~autos.km, data = autos)
+\end{lstlisting}
+
+- Modell Zusammenfassung ausgeben lassen (SCREEN-SHOT print(model))
+
+
+- Erstellen einer neuen Spalte in Autos die den Preis auf Basis des lRm:
+\begin{lstlisting}
+autos$predicted_1 <- predict(model, autos)
+\end{lstlisting}
+
+- multiples Rm (mRm) erstellen: autos.preis = a * autos.km + b * autos.ps + b
+\begin{lstlisting}
+model <-lm(autos.preis~autos.km+autos.ps, data = autos)
+\end{lstlisting}
+
+- Modell Zusammenfassung ausgeben lassen (SCREEN-SHOT print(model))
+
+- Erstellen einer neuen Spalte in Autos die den Preis auf Basis des mRm:
+\begin{lstlisting}
+autos$predicted_2 <- predict(model, autos)
+\end{lstlisting}
+
+print(model) => fehlt noch die Ausgabe der einzelnen Models
+head(autos)
+
+- Inhalt der Tabelle autos im Hive auf die Variable autos in R zuweisen:
+\begin{lstlisting}
+hotels <- dbGetQuery(conn, "Select * from hotels")
+\end{lstlisting}
+
+- Ausgabe der ersten 5 Zeilen
+\begin{lstlisting}
+head(hotels)
+\end{lstlisting}
+
+- lineares Regressionsmodell (lRm) erstellen: autos.preis = a * autos.km + b
+\begin{lstlisting}
+model <-lm(hotels.preisinmio~hotels.gewinn+hotels.qm, data = hotels)
+\end{lstlisting}
+
+- Erstellen einer neuen Spalte in Autos die den Preis auf Basis des lRm:
+\begin{lstlisting}
+hotels$predicted_1 <- predict(model, hotels)
+\end{lstlisting}
+
+- Modell Zusammenfassung ausgeben lassen (SCREEN-SHOT print(model))
+
+
+- multiples Rm (mRm) erstellen: autos.preis = a * autos.km + b * autos.ps + b
+\begin{lstlisting}
+model <-lm(hotels.preisinmio~hotels.gewinn+hotels.qm+hotels.stadt, data =       hotels)
+\end{lstlisting}
+
+- Modell Zusammenfassung ausgeben lassen (SCREEN-SHOT print(model))
+
+
+- Erstellen einer neuen Spalte in Autos die den Preis auf Basis des mRm:
+\begin{lstlisting}
+hotels$predicted\_2 <- predict(model, hotels)
+\end{lstlisting}
+
+
+\subsection{Aufteilung der Aufgaben im Team}
+\subsection{Darstellung der benutzen Werkzeuge und Systeme}
+\subsubsection*{Entwurfswerkzeug}
+- HIVE (weil da die Daten strukturiert wurden?)
+
+\subsubsection{Entwicklungsumgebung}
+- R
+
