@@ -34,12 +34,12 @@ library(RODBC)
 \end{lstlisting}
 \item[-]Zuweisen Genutzten Datenbank auf (abgelegt in R source Ordner)
 \begin{lstlisting}
-channel <- odbcConnectAccess("DATA\_DB.mdb")
+channel <- odbcConnectAccess("DATA_DB.mdb")
 \end{lstlisting}
 
 \item[-]Zweisen der Datentabelle auf Objekt:
 \begin{lstlisting}
-data = sqlQuery(channel ,paste('SELECT * FROM HOUSE\_PRICE\_SQRFT'))
+data = sqlQuery(channel ,paste('SELECT * FROM HOUSE_PRICE_SQRFT'))
 \end{lstlisting}
 
 \item[-]Anzeigen der ersten sechs Zeilen der Tabelle/Objekt(\autoref{fig:rjdbc2})
