@@ -16,12 +16,13 @@ Mittels dem Anlegen von zwei Tabellen in HIVE und dem anschließenden Bearbeiten
 \item[-] HIVE über den Terminal in Oracle VM4.9:
 
 \begin{lstlisting}
-HIVE
+hive
 \end{lstlisting}
 
-\item[-] Separate Datenbank im HIVE anlegen, falls keine namentlich identische existiert:
+\item[-] Separate Datenbank im HIVE anlegen, falls keine namentlich identische existiert und verwenden:
 \begin{lstlisting}
 CREATE DATABASE IF NOT EXISTS diim18;
+use diim18;
 \end{lstlisting}
 
 \item[-] Tabelle „hotels“ anlegen mit folgendem Befehl:
